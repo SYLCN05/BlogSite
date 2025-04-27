@@ -29,3 +29,4 @@ packages/
 Thumbs.db
 #ignore
 **/appsettings.json
+BlogSite/appsettings.json
