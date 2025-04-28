@@ -2,6 +2,7 @@
     Layout = "/Views/Shared/_BlogLayout.cshtml";
 }
 
+@model Blog
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -14,15 +15,15 @@
 
 
 <div class="mainbar" style="margin-top:25px; margin-left:120px;">
-    <div class="article">
-        <h2><span>Een Blog</span> Entry</h2>
+        <div class="article">
+        <h2><span>@Model.Name</span></h2>
         <div class="clr"></div>
         <p>Gepost door <a href="#">Owner</a>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum odio, ac blandit ante orci ut diam. Cras fringilla magna. Phasellus suscipit, leo a pharetra condimentum, lorem tellus eleifend magna, eget fringilla velit magna id neque. Curabitur vel urna. In tristique orci porttitor ipsum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo. </p>
-        <p><a href="#"><strong>Comments (3)</strong></a>27 mei, 2010  <a href="#"><strong>Edit</strong></a></p>
+        <p>@Model.Description</p>
+        <p><a href="#"><strong>Comments (@Model.CommentCount)</strong></a> @Model.PublishDate <a href="#"><strong>Edit</strong></a></p>
     </div>
     <div class="article">
-        <h2><span>3</span> Comments</h2>
+        <h2><span>@Model.CommentCount</span> Comments</h2>
         <div class="clr"></div>
         <div class="comment">
             <a href="#"><img src="/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
@@ -73,4 +74,5 @@
             </ol>
         </form>
     </div>
+  
 </div>

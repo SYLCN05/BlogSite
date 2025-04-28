@@ -11,7 +11,7 @@
             @* <img src="/images/img1.jpg" width="625" height="205" alt="" /> *@
             <img src="@blog.ImageUrl" width="625" height="205" alt="" />
             <p>@blog.Description</p>
-            <p class="spec"><a href="/Blogs/Details" class="rm">Lees meer</a> 
+            <p class="spec"><a asp-controller="Blogs" asp-action="Details" asp-route-id="@blog.Id" class="rm">Lees meer</a> 
                 <a href="#" class="com"><span>@blog.CommentCount</span> Comments</a>
                 <a href="#" class="com"><span>@blog.LikeCount</span> Likes</a>
                 <a href="#" class="com"><span>@blog.ViewCount</span> Views</a>

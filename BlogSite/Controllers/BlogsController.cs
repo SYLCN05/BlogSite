@@ -19,9 +19,12 @@ namespace BlogSite.Controllers
             return View(blogs);
         }
 
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var taak = await _context.Blogs.FindAsync(id);
+            return View(taak);
         }
+
+        
     }
 }
