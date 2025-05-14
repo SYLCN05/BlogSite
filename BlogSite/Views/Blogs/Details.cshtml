@@ -18,9 +18,9 @@
         <div class="article">
         <h2><span>@Model.Name</span></h2>
         <div class="clr"></div>
-        <p>Gepost door <a href="#">Owner</a>
         <p>@Model.Description</p>
-        <p><a href="#"><strong>Comments (@Model.CommentCount)</strong></a> @Model.PublishDate <a href="#"><strong>Edit</strong></a></p>
+        <p>Tags: <a href="#">@Model.Tags</a></p>
+        <p><a href="#"><strong>Comments (@Model.CommentCount)</strong></a> @Model.PublishDate.ToString("dd/MM/yyyy HH:mm"); <a href="#"><strong>Edit</strong></a></p>
     </div>
     <div class="article">
         <h2><span>@Model.CommentCount</span> Comments</h2>

@@ -6,6 +6,7 @@ body {
     width: 100%;
     color: #959595;
     font: normal 12px/1.8em Arial, Helvetica, sans-serif;
+    background-color:#fff;
 }
 
 html, .main {
@@ -109,7 +110,7 @@ h1 {
  float: left;
 }
 
- .content .mainbar .article .spec {
+ .content .mainbar .article .spec .footer {
  margin: 0 -22px;
  padding: 14px 22px;
  text-align: left;
@@ -232,3 +233,4 @@ color: #fff;
  font-size: 11px;
  float: left;
  }
+
