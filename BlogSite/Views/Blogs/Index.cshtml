@@ -7,14 +7,18 @@
         <div class="article">
             <h2><span>@blog.Name</span></h2>
             <div class="clr"></div>
-            <p><span class="date">@blog.PublishDate</span> Gepost door <a href="#">Owner</a><br />Tags: <a href="#">@blog.Tags</a>
+            <p><span class="date">@blog.PublishDate.ToString("MM/yyyy HH:mm")</span> | Tags: <a href="#">@blog.Tags</a>
             @* <img src="/images/img1.jpg" width="625" height="205" alt="" /> *@
             <img src="@blog.ImageUrl" width="625" height="205" alt="" />
-            <p>@blog.Description</p>
+            @{
+                string oldDescription = blog.Description;
+                string newDescription = oldDescription.Length > 50 ? oldDescription.Substring(0,250) + "..." : oldDescription;
+            }
+            <p>@newDescription</p>
             <p class="spec"><a asp-controller="Blogs" asp-action="Details" asp-route-id="@blog.Id" class="rm">Lees meer</a> 
-                <a href="#" class="com"><span>@blog.CommentCount</span> Comments</a>
-                <a href="#" class="com"><span>@blog.LikeCount</span> Likes</a>
-                <a href="#" class="com"><span>@blog.ViewCount</span> Views</a>
+                <a href="#" style="margin-left:5px;"><span>@blog.CommentCount</span> Comments</a>
+                <a href="#" style="margin-left:5px;"><span>@blog.LikeCount</span> Likes</a>
+                <a href="#" style="margin-left:5px;" ><span>@blog.ViewCount</span> Views</a>
             </p>
         </div>
     }
