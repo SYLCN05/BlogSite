@@ -1,5 +1,6 @@
 ﻿
 using BlogSite.Data;
+using BlogSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,18 @@ namespace BlogSite.Controllers
             return View(taak);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(Comment comment)
+        {
+           
+            comment.PublishDate = DateTime.Now;
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+                
+               
+            
+            return RedirectToAction("Index");
+        }
         
     }
 }

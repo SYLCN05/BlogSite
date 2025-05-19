@@ -53,18 +53,19 @@
     <div class="article">
         <h2><span>Laat een reactie achter</span> </h2>
         <div class="clr"></div>
-        <form action="#" method="post" id="leavereply">
+        <form action="/Blogs/CreateComment" method="post" id="leavereply">
             <ol>
+                <input id="blogid" name="blogId" class="text" type="hidden" value="@Model.Id"/>
                 <li>
-                    <label for="name">Name (verplicht)</label>
-                    <input id="name" name="name" class="text" />
+                    <label for="Username">Name (verplicht)</label>
+                    <input id="Username" name="Username" class="text" required />
                 </li>
                 <li>
                     <label for="email">Email Address (verplicht)</label>
-                    <input id="email" name="email" class="text" />
+                    <input id="email" name="email" class="text" required />
                 </li>
                 <li>
-                    <label for="message">Uw bericht</label>
+                    <label for="message">Je bericht</label>
                     <textarea id="message" name="message" rows="8" cols="50"></textarea>
                 </li>
                 <li>
