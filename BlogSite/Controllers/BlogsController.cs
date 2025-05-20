@@ -23,6 +23,8 @@ namespace BlogSite.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var taak = await _context.Blogs.FindAsync(id);
+            var comment = await _context.Comments.Where(c => c.BlogId == id).ToListAsync();
+            ViewBag.Comments = comment;
             return View(taak);
         }
 
@@ -34,9 +36,7 @@ namespace BlogSite.Controllers
             await _context.Comments.AddAsync(comment);
             await _context.SaveChangesAsync();
                 
-               
-            
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = comment.BlogId});
         }
         
     }

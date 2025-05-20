@@ -20,35 +20,23 @@
         <div class="clr"></div>
         <p>@Model.Description</p>
         <p>Tags: <a href="#">@Model.Tags</a></p>
-        <p><a href="#"><strong>Comments (@Model.CommentCount)</strong></a> @Model.PublishDate.ToString("dd/MM/yyyy HH:mm"); <a href="#"><strong>Edit</strong></a></p>
+        <p><a href="#"><strong>Comments (@Model.CommentCount)</strong></a> @Model.PublishDate.ToString("MMMM d\\s\\t\\e, yyyy 'om' h:mm tt") <a href="#"><strong>Edit</strong></a></p>
     </div>
     <div class="article">
         <h2><span>@Model.CommentCount</span> Comments</h2>
         <div class="clr"></div>
-        <div class="comment">
-            <a href="#"><img src="/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
-            <p>
-                <a href="#">admin</a> zegt:<br />
-                20 April, 2009 om 22:17 uur
-            </p>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.</p>
-        </div>
-        <div class="comment">
-            <a href="#"><img src="/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
-            <p>
-                <a href="#">admin</a> zegt:<br />
-                20 April, 2009 om 22:17 uur
-            </p>
-            <p>Lorem ipsum dolor sit amet,  Lorem ipsum dolor sit amet,consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo.</p>
-        </div>
-        <div class="comment">
-            <a href="#"><img src="/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
-            <p>
-                <a href="#">admin</a> zegt:<br />
-                20 April, 2009 om 22:17 uur
-            </p>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum.</p>
-        </div>
+        @foreach(var comment in ViewBag.Comments)
+        {
+            <div class="comment">
+                <a href="#"><img src="/images/userpic.gif" width="40" height="40" alt="" class="userpic" /></a>
+                <p>
+                    <a href="#">@comment.Username</a>:<br />
+                    @Model.PublishDate.ToString("MMMM d\\s\\t\\e, yyyy 'om' h:mm tt")
+                </p>
+                <p>@comment.Message</p>
+            </div>
+        }
+     
     </div>
     <div class="article">
         <h2><span>Laat een reactie achter</span> </h2>
