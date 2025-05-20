@@ -22,10 +22,12 @@ namespace BlogSite.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var taak = await _context.Blogs.FindAsync(id);
+            var blog = await _context.Blogs.FindAsync(id);
+            blog.ViewCount += 1;
+            await _context.SaveChangesAsync();
             var comment = await _context.Comments.Where(c => c.BlogId == id).ToListAsync();
             ViewBag.Comments = comment;
-            return View(taak);
+            return View(blog);
         }
 
         [HttpPost]
@@ -34,8 +36,10 @@ namespace BlogSite.Controllers
            
             comment.PublishDate = DateTime.Now;
             await _context.Comments.AddAsync(comment);
+            var blog = await _context.Blogs.Where(b => b.Id == comment.BlogId).FirstOrDefaultAsync();
+            blog.CommentCount += 1;
+
             await _context.SaveChangesAsync();
-                
             return RedirectToAction("Details", new { id = comment.BlogId});
         }
         
