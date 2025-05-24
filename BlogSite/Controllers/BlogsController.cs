@@ -42,6 +42,26 @@ namespace BlogSite.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = comment.BlogId});
         }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateContact(Contact contact)
+        {
+            contact.CreatedAt = DateTime.Now;
+            await _context.Contacts.AddAsync(contact);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
         
     }
 }
