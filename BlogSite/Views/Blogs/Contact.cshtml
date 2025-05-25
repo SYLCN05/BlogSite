@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<head>
+    <link  rel="stylesheet" href="/css/BlogStyle.css    "/>
+</head>
+
+<div class="mainbar">
+    <div class="article">
+        <h2><span>Contact</span></h2>
+        <div class="clr"></div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget bibendum tellus. Nunc vel imperdiet tellus. Mauris</p>
+    </div>
+    <div class="article">
+        <h2>Stuur ons een mail</h2>
+        <div class="clr"></div>
+        <form action="/Blogs/CreateContact" method="post" id="contactform">
+            <ol>
+                <li>
+                    <label for="Username">Naam (verplicht)</label>
+                    <input id="Username" name="Name" class="text" required />
+                </li>
+                <li>
+                    <label for="email">Email Address (verplicht)</label>
+                    <input id="email" name="email" class="text" required />
+                </li>
+                <li>
+                    <label for="message">Je bericht</label>
+                    <textarea id="message" name="message" rows="8" cols="50"></textarea>
+                </li>
+                <li>
+                    <input type="image" name="imageField" id="imageField" src="/images/submit.gif" class="send" />
+                    <div class="clr"></div>
+                </li>
+            </ol>
+        </form>
+    </div>
+</div>
