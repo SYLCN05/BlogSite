@@ -12,6 +12,11 @@
             public int CommentCount { get; set; }
             public int ViewCount { get; set; }
             public int Status { get; set; }
+
+            public User User { get; set; }
+            
+            public int UserId { get; set; }
+            
         
     }
 }
