@@ -48,9 +48,40 @@ namespace BlogSite.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Login()
+        {
+            return View("Login");
+        }
+        [HttpPost]
+        public async Task<IActionResult> LoginConfirm(User usermodel)
+        {
+           
+            var entry = await _context.Users.Where(u => u.Username.Equals(usermodel.Username) && u.Password.Equals(usermodel.Password)).FirstOrDefaultAsync();
+            if (entry != null) 
+            {
+                return RedirectToAction("Index");
+            }
+            TempData["Error"] = "De opgegeven gebruikersnaam of wachtwoord is niet correct";
+            return View("Login", entry);
+           
+        }
+
+        public IActionResult Register()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> RegisterConfirm(User usermodel)
+        {
+            if (ModelState.IsValid) 
+            {
+                var newUser = await _context.Users.AddAsync(usermodel);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Login");
+            }
+            TempData["Error"] = "Oei er ging iets mis bij het versturen van de gegevens, controleer of de gegevens die je verstuurd kloppen";
+            return View("Register",usermodel);
         }
 
         [HttpPost]

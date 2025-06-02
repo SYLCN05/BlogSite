@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = "/Views/Shared/_BlogLayout.cshtml";
+}
+@model User
+<partial name="/Views/Shared/_Notifications.cshtml"/>
+
+   <form asp-controller="Blogs" asp-action="LoginConfirm" method="post">
+    <div style="display:flex; justify-content:center; align-items:center; flex-direction:column; background-color: limegreen; max-width:580px; margin-left:200px;">
+        <h3 style="text-align:center; color:white;">Login</h3>
+        <label style="color:white">Gerbuikersnaam</label>
+        <input type="text" required asp-for="Username"/>
+        <label style="color:white">Wachtwoord</label>
+        <input type="password" required asp-for="Password"/>
+        <br />
+        <input class="btn btn-primary" type="submit" value="Login" style="margin-bottom:5px;" />
+        <h4>Nog geen account registreer <a href="/blogs/register">hier<a/></h4>
+    </div>
+    </form>
+
+
