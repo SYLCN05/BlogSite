@@ -15,7 +15,6 @@
         <ul>
           <li class="active"><a href="../blogs/index">Home</a></li>
           <li><a href="../blogs/about">Over ons</a></li>
-          <li><a href="../blogs/index">Blogs</a></li>
           @if(User.Identity.IsAuthenticated){
              <li><a asp-controller="Blogs" asp-action="Logout">Logout</a></li>
           }else{

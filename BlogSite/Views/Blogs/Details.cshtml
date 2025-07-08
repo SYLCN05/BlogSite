@@ -20,7 +20,8 @@
         <div class="clr"></div>
         <p>@Model.Description</p>
         <p>Tags: <a href="#">@Model.Tags</a></p>
-        <p><a href="#"><strong>Comments (@Model.CommentCount)</strong></a> @Model.PublishDate.ToString("MMMM d\\s\\t\\e, yyyy 'om' h:mm tt") <a href="#"><strong>Edit</strong></a></p>
+        <p ><strong>Comments (@Model.CommentCount)</strong> @Model.PublishDate.ToString("MMMM d\\s\\t\\e, yyyy 'om' h:mm tt")</p>
+        <p><a asp-controller="Blogs" asp-action="EditBlog" asp-route-id="@Model.Id">edit</a></p>
     </div>
     <div class="article">
         <h2><span>@Model.CommentCount</span> Comments</h2>
@@ -47,10 +48,6 @@
                 <li>
                     <label for="Username">Naam (verplicht)</label>
                     <input id="Username" name="Username" class="text" required />
-                </li>
-                <li>
-                    <label for="email">Email Address (verplicht)</label>
-                    <input id="email" name="email" class="text" required />
                 </li>
                 <li>
                     <label for="message">Je bericht</label>

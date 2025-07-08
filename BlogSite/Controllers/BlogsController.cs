@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -65,6 +66,7 @@ namespace BlogSite.Controllers
 
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public async Task<IActionResult> LoginConfirm(LoginViewModel usermodel)
         {
@@ -76,7 +78,8 @@ namespace BlogSite.Controllers
                 {
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.Username)
+                        new Claim(ClaimTypes.Name, user.Username),
+                      
 
                     };
 
@@ -92,9 +95,12 @@ namespace BlogSite.Controllers
 
                     return RedirectToAction("Index");
                 }
+                else
+                {
+                    TempData["Error"] = "Ongeldige inlog poging prbeer het opnieuw";
+                    return RedirectToAction("Login",usermodel);
+                }
 
-                ModelState.AddModelError(string.Empty, "Ongeldige inlog poging probeer het opnieuw");
-            
             }
 
             return View(usermodel);
@@ -106,6 +112,7 @@ namespace BlogSite.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> RegisterConfirm(User usermodel)
         {
@@ -129,6 +136,48 @@ namespace BlogSite.Controllers
 
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> EditBlog(int id)
+        {
+            var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Id == id);
+
+            if (blog == null)
+            {
+                return NotFound();
+            }
+
+            var blogModel = new EditViewModel
+            {
+                Id = blog.Id,
+                Name = blog.Name,
+                Description = blog.Description,
+                ImageUrl = blog.ImageUrl,
+                Tags = blog.Tags,
+
+            };
+            return View(blogModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditBlog(EditViewModel model)
+        {
+            var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Id == model.Id);
+
+            if(blog == null)
+            {
+                return NotFound();
+            }
+
+            blog.Name = model.Name;
+            blog.Description = model.Description;
+            blog.ImageUrl = model.ImageUrl;
+            blog.Tags = model.Tags;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = blog.Id });
+        }
+
+       
         
     }
 }

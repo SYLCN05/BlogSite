@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "/Views/Shared/_BlogLayout.cshtml";
+}
+@model EditViewModel
+<partial name="/Views/Shared/_ValidationScriptsPartial.cshtml">
+<form asp-controller="Blogs"  method="post">
+    <div style="display:flex; justify-content:center; align-items:center; flex-direction:column; background-color: limegreen; max-width:580px; margin-left:200px;">
+        <h3 style="text-align:center; color:white;">Update</h3>
+
+        <input type="hidden"  asp-for="Id" />
+
+        <label style="color:white">Title</label>
+        <input type="text" required asp-for="Name" />
+        <span asp-validation-for="Name" style="color:red" ></span>
+
+        <label style="color:white">Beschrijving</label>
+        <textarea rows="8" cols="50" asp-for="Description"></textarea>
+        <span asp-validation-for="Description" style="color:red"></span>
+        <br />
+
+        <label style="color:white">ImageUrl</label>
+        <input type="text" required asp-for="ImageUrl" />
+        <span asp-validation-for="ImageUrl" style="color:red"></span>
+
+        <label style="color:white">Tags</label>
+        <input type="text" required asp-for="Tags" />
+        <span asp-validation-for="Tags" style="color:red"></span>
+
+        <br />
+        <input class="btn btn-primary" type="submit" value="Update" style="margin-bottom:5px;" asp-action="EditBlog" />
+      
+    </div>
+</form>
