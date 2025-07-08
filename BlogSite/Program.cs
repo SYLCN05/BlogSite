@@ -14,10 +14,10 @@ builder.Services.AddDbContext<BlogDbContext>(
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Blogs/Register";
+        options.LoginPath = "/Blogs/Login";
     }
     );
-
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -36,6 +36,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

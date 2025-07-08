@@ -57,8 +57,14 @@
                     <textarea id="message" name="message" rows="8" cols="50"></textarea>
                 </li>
                 <li>
-                    <input type="image" name="imageField" id="imageField" src="/images/submit.gif" class="send" />
-                    <div class="clr"></div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <input type="image" name="imageField" id="imageField" src="/images/submit.gif" class="send" />
+                        <div class="clr"></div>
+                    }else
+                    {
+                        <a href="/blogs/Login"><input type="button" value="Login" /></a>
+                    }                 
                 </li>
             </ol>
         </form>

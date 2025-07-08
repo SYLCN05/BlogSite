@@ -13,10 +13,15 @@
     <div class="header_resize">
       <div class="menu_nav">
         <ul>
-          <li class="active"><a href="index.html">Home</a></li>
-          <li><a href="about.html">Over ons</a></li>
-          <li><a href="/blogs/index">Blogs</a></li>
-          <li><a href="/blogs/login">Login</a></li>
+          <li class="active"><a href="../blogs/index">Home</a></li>
+          <li><a href="../blogs/about">Over ons</a></li>
+          <li><a href="../blogs/index">Blogs</a></li>
+          @if(User.Identity.IsAuthenticated){
+             <li><a asp-controller="Blogs" asp-action="Logout">Logout</a></li>
+          }else{
+             <li><a href="/blogs/login">Login</a></li>
+          }
+          
         </ul>
       </div>
       <div class="logo">
@@ -31,7 +36,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
-            </main>
+        </main>
     </div>
    
     

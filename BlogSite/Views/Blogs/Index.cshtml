@@ -1,7 +1,10 @@
 ﻿
 @model List<Blog>
 
-<div class="mainbar">
+@{
+    Layout = "/Views/Shared/_BlogLayout.cshtml";
+}
+<div class="mainbar" style="margin-left:120px; margin-top:30px;">
     @foreach(var blog in Model)
     {
         <div class="article">

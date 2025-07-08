@@ -56,6 +56,15 @@ namespace BlogSite.Controllers
         {
             return View("Login");
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         public async Task<IActionResult> LoginConfirm(LoginViewModel usermodel)
         {
