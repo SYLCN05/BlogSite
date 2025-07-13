@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "/Views/Shared/_BlogLayout.cshtml";
 }
-@model User
+@model RegisterViewModel
 <partial name="/Views/Shared/_Notifications.cshtml" />
 
 <form asp-controller="Blogs" asp-action="RegisterConfirm" method="post">
@@ -11,6 +11,8 @@
         <input type="text" required asp-for="Username" placeholder="Gebruikersnaam" />
         <label style="color:white">Wachtwoord</label>
         <input type="password" required asp-for="Password" placeholder="Wachtwoord"/>
+        <label style="color:white">Bevestig het wachtwoord</label>
+        <input type="password" required asp-for="PasswordConfirm"/>
         <br />
         <input class="btn btn-primary" type="submit" value="Verstuur" style="margin-bottom:5px;" />
     </div>

@@ -114,17 +114,45 @@ namespace BlogSite.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterConfirm(User usermodel)
+        public async Task<IActionResult> RegisterConfirm(RegisterViewModel RegsiterUsermodel)
         {
-            if (ModelState.IsValid) 
+            if(ModelState.IsValid)
             {
-                var newUser = await _context.Users.AddAsync(usermodel);
-                await _context.SaveChangesAsync();
+                if (RegsiterUsermodel.Password.Equals(RegsiterUsermodel.PasswordConfirm))
+                {
+                    var newUser = new User
+                    {
+                        Username = RegsiterUsermodel.Username,
+                        Password = RegsiterUsermodel.Password
+                    };
 
-                return RedirectToAction("Login");
+                    _context.Users.Add(newUser);
+                    await _context.SaveChangesAsync();
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, RegsiterUsermodel.Username)
+
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    var authProperties = new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
+                    };
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["Error"] = "Wachtwoord en wachtwoord herhaal komen niet overeen";
+                    return View("Register", RegsiterUsermodel);
+                }
             }
-            TempData["Error"] = "Oei er ging iets mis bij het versturen van de gegevens, controleer of de gegevens die je verstuurd kloppen";
-            return View("Register",usermodel);
+            return BadRequest();
         }
 
         [HttpPost]
