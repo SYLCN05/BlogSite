@@ -40,12 +40,14 @@ namespace BlogSite.Controllers
         {
            
             comment.PublishDate = DateTime.Now;
+            comment.Username = User.Identity.Name;
+            comment.Email = "testmail";
             await _context.Comments.AddAsync(comment);
             var blog = await _context.Blogs.Where(b => b.Id == comment.BlogId).FirstOrDefaultAsync();
             blog.CommentCount += 1;
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", new { id = comment.BlogId});
+            return RedirectToAction("Details", blog);
         }
 
         public IActionResult About()

@@ -45,10 +45,10 @@
         <form action="/Blogs/CreateComment" method="post" id="leavereply">
             <ol>
                 <input id="blogid" name="blogId" class="text" type="hidden" value="@Model.Id"/>
-                <li>
+               @*  <li>
                     <label for="Username">Naam (verplicht)</label>
                     <input id="Username" name="Username" class="text" required />
-                </li>
+                </li> *@
                 <li>
                     <label for="message">Je bericht</label>
                     <textarea id="message" name="message" rows="8" cols="50"></textarea>
