@@ -1,6 +1,7 @@
 ﻿
 using BlogSite.Data;
 using BlogSite.Models;
+using BlogSite.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +14,12 @@ namespace BlogSite.Controllers
 {
     public class BlogsController : Controller
     {
-        public readonly BlogDbContext _context;
+        private readonly BlogDbContext _context;
+      
         public BlogsController(BlogDbContext context)
         {
             _context = context;
+           
         }
         public async Task<IActionResult> Index()
         {
@@ -76,30 +79,37 @@ namespace BlogSite.Controllers
             {
                 var user =  await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(usermodel.Username));
 
-                if(user != null && usermodel.Password.Equals(user.Password))
+                if(user != null)
                 {
-                    var claims = new List<Claim>
+                    PasswordHasher hasher = new PasswordHasher();
+                    bool userVerify = hasher.Verify(usermodel.Password, user.Password);
+                    if (userVerify)
+                    {
+
+                        var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.Username),
-                      
+
 
                     };
 
-                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    var authproperties = new AuthenticationProperties
-                    {
-                        IsPersistent = true,
-                        ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
-                    };
+                        var authproperties = new AuthenticationProperties
+                        {
+                            IsPersistent = true,
+                            ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
+                        };
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authproperties);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authproperties);
 
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }
+                  
                 }
                 else
                 {
-                    TempData["Error"] = "Ongeldige inlog poging prbeer het opnieuw";
+                    TempData["Error"] = "Ongeldige inlog poging probeer het opnieuw";
                     return RedirectToAction("Login",usermodel);
                 }
 
@@ -122,10 +132,13 @@ namespace BlogSite.Controllers
             {
                 if (RegsiterUsermodel.Password.Equals(RegsiterUsermodel.PasswordConfirm))
                 {
+                    PasswordHasher hasher = new PasswordHasher();
+                    var hashedPassword=  hasher.Hash(RegsiterUsermodel.Password);
+                  
                     var newUser = new User
                     {
                         Username = RegsiterUsermodel.Username,
-                        Password = RegsiterUsermodel.Password
+                        Password = hashedPassword
                     };
 
                     _context.Users.Add(newUser);
