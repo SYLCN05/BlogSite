@@ -9,7 +9,7 @@ namespace BlogSite.Services
         private const int HashSize = 32;
         private const int Iterations = 100000;
 
-        private readonly HashAlgorithmName Algortithm = HashAlgorithmName.SHA3_512;
+        private readonly HashAlgorithmName Algortithm = HashAlgorithmName.SHA512;
         public string Hash(string password)
         {
             byte[] salt = RandomNumberGenerator.GetBytes(SaltSize);
