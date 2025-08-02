@@ -21,7 +21,11 @@
         <p>@Model.Description</p>
         <p>Tags: <a href="#">@Model.Tags</a></p>
         <p ><strong>Comments (@Model.CommentCount)</strong> @Model.PublishDate.ToString("MMMM d\\s\\t\\e, yyyy 'om' h:mm tt")</p>
-        <p><a asp-controller="Blogs" asp-action="EditBlog" asp-route-id="@Model.Id">edit</a></p>
+        @if(User.IsInRole("Admin")){
+            <p><a asp-controller="Blogs" asp-action="EditBlog" asp-route-id="@Model.Id">edit</a></p>
+        }
+      
+
     </div>
     <div class="article">
         <h2><span>@Model.CommentCount</span> Comments</h2>
