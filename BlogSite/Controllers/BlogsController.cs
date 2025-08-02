@@ -89,8 +89,7 @@ namespace BlogSite.Controllers
                         var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.Username),
-
-
+                        new Claim(ClaimTypes.Role, "Admin")
                     };
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -146,8 +145,8 @@ namespace BlogSite.Controllers
 
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, RegsiterUsermodel.Username)
-
+                        new Claim(ClaimTypes.Name, RegsiterUsermodel.Username),
+                        
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -179,6 +178,7 @@ namespace BlogSite.Controllers
 
             return RedirectToAction("Index");
         }
+        [Authorize(Policy = "Administrator")]
         public async Task<IActionResult> EditBlog(int id)
         {
             var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Id == id);
@@ -218,6 +218,38 @@ namespace BlogSite.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", new { id = blog.Id });
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "Administrator")]
+        public async Task<IActionResult> CreateBlog(CreateBlogViewModel model) 
+        {
+           var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(User.Identity.Name));
+
+            var newBlog = new Blog
+            {
+                Name = model.Name,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                PublishDate = DateTime.Now,
+                Tags = model.Tags,
+                Status = model.Status,
+                User = user,
+                UserId = user.Id
+
+            };
+
+           await _context.Blogs.AddAsync(newBlog);
+           await _context.SaveChangesAsync();
+
+           return RedirectToAction("Index");
+
+
+        }
+
+        public IActionResult CreateBlog()
+        {
+            return View();
         }
 
        
