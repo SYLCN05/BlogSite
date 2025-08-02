@@ -1,5 +1,6 @@
 using BlogSite.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Blogs/Login";
     }
     );
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Administrator", policy => policy.RequireRole("Admin"));
+});
 builder.Services.AddSession();
 
 var app = builder.Build();
