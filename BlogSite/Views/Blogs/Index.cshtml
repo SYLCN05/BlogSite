@@ -14,11 +14,11 @@
                 <span class="date">@blog.PublishDate.ToString("MMMM d\\s\\t\\e, yyyy 'om' h:mm tt")</span> | Tags: <a href="#">@blog.Tags</a>
             @* <img src="/images/img1.jpg" width="625" height="205" alt="" /> *@
             <img src="@blog.ImageUrl" width="625" height="205" alt="" />
-            @{
+            @* @{
                 string oldDescription = blog.Description;
                 string newDescription = oldDescription.Length > 50 ? oldDescription.Substring(0,250) + "..." : oldDescription;
-            }
-            <p>@newDescription</p>
+            } *@
+            @* <p>@newDescription</p> *@
             <p class="spec"><a asp-controller="Blogs" asp-action="Details" asp-route-id="@blog.Id" class="rm">Lees meer</a> 
                 <a href="#" style="margin-left:5px;"><span>@blog.CommentCount</span> Comments</a>
                 <a href="#" style="margin-left:5px;" ><span>@blog.ViewCount</span> Views</a>
