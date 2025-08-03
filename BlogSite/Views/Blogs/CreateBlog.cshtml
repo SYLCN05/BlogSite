@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "/Views/Shared/_BlogLayout.cshtml";
+
+}
+@model CreateBlogViewModel 
+
+
+ <form method="post" asp-action="CreateBlog" asp-controller="Blogs">
+<div style="color:white; display:flex; justify-content:center; align-items:center; align-content:center; flex-direction:column; background-color:limegreen; width:400px; margin-left:350px; border-radius:20px; ">
+
+    <label asp-for="Name"></label>
+    <input asp-for="Name"  required/>
+    <label asp-for="Description"></label>
+    <textarea cols="30" rows="20" asp-for="Description"></textarea>
+    <label asp-for="ImageUrl"></label>
+    <input type="url" required asp-for="ImageUrl" />
+    <label asp-for="Tags"></label>
+    <input type="text" asp-for="Tags" />
+    <label asp-for="Status"></label>
+    <input type="number" asp-for="Status" />
+    <input type="submit" asp-controller="Blogs" asp-action="CreateBlog" value="Versturen"/>
+
+</div>
+</form>
