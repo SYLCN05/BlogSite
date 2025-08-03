@@ -242,7 +242,7 @@ namespace BlogSite.Controllers
            await _context.Blogs.AddAsync(newBlog);
            await _context.SaveChangesAsync();
 
-           return RedirectToAction("Index");
+           return RedirectToAction("Index", new {id = newBlog.Id});
 
 
         }
