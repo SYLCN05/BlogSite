@@ -252,7 +252,14 @@ namespace BlogSite.Controllers
             return View();
         }
 
-       
+        public async Task<IActionResult> Search(string searchString)
+        {
+            var blogToBeFound = await _context.Blogs.
+                Where(b => b.Name.StartsWith(searchString))
+                .Where(b => b.Status ==1)
+                .ToListAsync();
+            return View("Index",blogToBeFound);
+        }
         
     }
 }
