@@ -13,15 +13,19 @@
     <div class="header_resize">
       <div class="menu_nav">
         <ul>
-          <li class="active"><a href="../blogs/index">Home</a></li>
+          <li class=""><a href="../blogs/index">Home</a></li>
           <li><a href="../blogs/about">Over ons</a></li>
           @if(User.Identity.IsAuthenticated){
              <li><a asp-controller="Blogs" asp-action="Logout">Logout</a></li>
           }else{
              <li><a href="/blogs/login">Login</a></li>
           }
-          
-        </ul>
+          <form method="get" asp-controller="Blogs" asp-action="Search" style="display:inline">
+                <input style="margin-top:5px;" type="text" maxlength="20" />
+                <input type="image" src="~/images/search_btn.gif" style="height:19px; width:20px; position:relative; top:5px; right:25px;" />
+          </form>
+           
+        </ul>   
       </div>
       <div class="logo">
         <h1><a asp-controller="Blogs" asp-action="Index">You<span>Blog</span></a> 
