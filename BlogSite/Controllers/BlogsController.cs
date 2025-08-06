@@ -89,7 +89,6 @@ namespace BlogSite.Controllers
                         var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.Username),
-                        new Claim(ClaimTypes.Role, "Admin")
                     };
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -259,6 +258,53 @@ namespace BlogSite.Controllers
                 .Where(b => b.Status ==1)
                 .ToListAsync();
             return View("Index",blogToBeFound);
+        }
+
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+        public IActionResult AdminRegister()
+        {
+            return View();
+
+        }
+
+        public async Task<IActionResult> AdminRegisterConfirm(LoginViewModel model)
+        {
+            if (ModelState.IsValid) 
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, model.Username),
+                    new Claim(ClaimTypes.Role, "Admin")
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
+                };
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+                PasswordHasher hasher = new PasswordHasher();
+                var hashedPassword= hasher.Hash(model.Password);
+
+                 var newAdmin= new User
+                {
+                    Username = model.Username,
+                    Password = hashedPassword
+                };
+                await _context.Users.AddAsync(newAdmin);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            TempData["Error"] = "Er ging iets mis met het maken van een nieuwe account controleer of de ingevulde gegevens kloppen";
+            return RedirectToAction("AdminRegister", model);
         }
         
     }
