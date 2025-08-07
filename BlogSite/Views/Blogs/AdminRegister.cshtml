@@ -2,18 +2,21 @@
     Layout = "/Views/Shared/_BlogLayout.cshtml";
 
 }
-@model LoginViewModel
+@model RegisterViewModel
 <partial name="/Views/Shared/_Notifications.cshtml" />
 
 <form method="post" asp-controller="Blogs" asp-action="AdminRegisterConfirm" style="display:inline">
     <div style="color:white;  display:flex; justify-content:center; align-content:center; align-items:center; flex-direction:column; background-color:limegreen; border-radius:10px; width:400px; margin-left:300px; height:200px;">
     <h3 style="color:white; position:relative;">Admin Register</h3>
 
-   <label asp-for="Username">Gebruikersnaam</label>
-   <input type="text" required asp-for="Username" style="outline:none; " />
+    <label asp-for="Username">Gebruikersnaam</label>
+    <input type="text" required asp-for="Username" style="outline:none; " />
     <label asp-for="Password">Wachtwoord</label>
-   <input type="password" asp-for="Password" required style="outline:none; " />
+    <input type="password" asp-for="Password" required style="outline:none; " />
+    <label asp-for="PasswordConfirm">Bevestig wachtwoord</label>
+    <input type="text" asp-for="PasswordConfirm" required style="outline:none;" />
     <input type="submit" asp-action="AdminRegisterConfirm" asp-controller="Blogs" style="background-color:whitesmoke ActiveBorder; margin-top:5px;"  />
+    
 </div>
 </form>
 
