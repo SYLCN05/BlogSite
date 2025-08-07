@@ -28,7 +28,13 @@
                 <a href="#" style="margin-left:5px;"><span>@blog.CommentCount</span> Comments</a>
                 <a href="#" style="margin-left:5px;" ><span>@blog.ViewCount</span> Views</a>
             </p>
+            @if (User.IsInRole("Admin"))
+            {
+               <a asp-controller="Blogs" asp-action="DeleteBlog" asp-route-id="@blog.Id"><img src="/images/Delete.png" style="height:50px; width:50px; margin-bottom:5px;" /></a>
+            }
+                
         </div>
+       
     }
    
 </div>
