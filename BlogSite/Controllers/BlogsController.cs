@@ -264,15 +264,47 @@ namespace BlogSite.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> AdminLoginConfirm(LoginViewModel model)
+        {
+            if (ModelState.IsValid) 
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(model.Username));
+
+                PasswordHasher passwordHasher = new PasswordHasher();
+                passwordHasher.Verify(model.Password, user.Password);
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, model.Username),
+                    new Claim(ClaimTypes.Role, "Admin")
+
+                };
+
+                var ClaimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(7)
+                };
+
+                await HttpContext.SignInAsync( CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(ClaimsIdentity), authProperties);
+                return RedirectToAction("Index");
+
+            }
+            TempData["Error"] = "Er ging iets mis tijdens het verifieren van uw gegevens, probeer het opnieuw";
+            return View(model);
+        }
         public IActionResult AdminRegister()
         {
             return View();
 
         }
 
-        public async Task<IActionResult> AdminRegisterConfirm(LoginViewModel model)
+        public async Task<IActionResult> AdminRegisterConfirm(RegisterViewModel model)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid && model.Password.Equals(model.PasswordConfirm)) 
             {
                 var claims = new List<Claim>
                 {
