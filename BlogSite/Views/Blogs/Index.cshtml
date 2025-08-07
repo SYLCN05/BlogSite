@@ -4,6 +4,11 @@
 @{
     Layout = "/Views/Shared/_BlogLayout.cshtml";
 }
+@if(User.IsInRole("Admin")){
+    <a style="text-decoration:none; color:white; background-color:limegreen; border-radius:5px; margin-left:400px; padding:20px;" href="../blogs/CreateBlog">Nieuwe blog</a>
+}
+
+
 <div class="mainbar" style="margin-left:120px; margin-top:30px;">
     @foreach(var blog in Model)
     {
