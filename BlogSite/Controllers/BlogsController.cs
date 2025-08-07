@@ -338,6 +338,22 @@ namespace BlogSite.Controllers
             TempData["Error"] = "Er ging iets mis met het maken van een nieuwe account controleer of de ingevulde gegevens kloppen";
             return RedirectToAction("AdminRegister", model);
         }
+
+        
+        [Authorize(Policy = "Administrator")]
+        public async Task<IActionResult> DeleteBlog(int id)
+        {
+            var blogToBeDeleted = await _context.Blogs.FindAsync(id);
+            if(blogToBeDeleted != null)
+            {
+                 _context.Blogs.Remove(blogToBeDeleted);
+                 await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            TempData["Error"] = "er ging iets mis bij het verwijderen van de blog probeer het opnieuw";
+            return RedirectToAction("Index");
+        }
         
     }
 }
