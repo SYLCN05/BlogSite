@@ -1,8 +1,10 @@
-﻿
-@model List<Blog>
-
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<Blog>
+<link rel="stylesheet" href="/css/Index.css" />
 @{
     Layout = "/Views/Shared/_BlogLayout.cshtml";
+    ViewBag.Title = "Blogs";
 }
 @if(User.IsInRole("Admin")){
     <a style="text-decoration:none; color:white; background-color:limegreen; border-radius:5px; margin-left:400px; padding:20px;" href="../blogs/CreateBlog">Nieuwe blog</a>
@@ -36,5 +38,17 @@
         </div>
        
     }
+
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+    new PagedListRenderOptions
+    {
+     UlElementClasses = new[] {"CustomPagnitation"},
+     LiElementClasses = new[] {"Custom-page-item"},
+     PageClasses = new[]{"Custom-page-link"}
+    }
+    )
+
+  
    
 </div>
