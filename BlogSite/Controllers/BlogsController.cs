@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace BlogSite.Controllers
 {
@@ -21,11 +23,19 @@ namespace BlogSite.Controllers
             _context = context;
            
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+
             //var blogs = await _context.Blogs.ToListAsync();
-            var blogs = await _context.Blogs.Where(b => b.Status == 1).ToListAsync();
-            return View(blogs);
+            var blogs = await _context.Blogs
+                .Where(b => b.Status == 1)
+                .OrderByDescending(b => b.PublishDate)
+                .ToListAsync();
+               
+
+            return View( blogs.ToPagedList(pageNumber, pageSize));
         }
 
         public async Task<IActionResult> Details(int id)
